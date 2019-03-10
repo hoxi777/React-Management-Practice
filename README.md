@@ -1,3 +1,7 @@
+## Management System
+
+이 프로젝트는 react와 git 연습하기 위해 만든 고객관리 프로그램 시스템입니다.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
