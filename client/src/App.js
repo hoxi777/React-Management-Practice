@@ -8,7 +8,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import { withStyles } from "@material-ui/core/styles";
-import { AutoComplete } from "material-ui";
 
 const styles = theme => ({
   root : {
@@ -23,31 +22,6 @@ const styles = theme => ({
 })
 
 
-const customer =[{
-    "id" : 1,
-    "image" : "https://placeimg.com/64/64/1",
-    "name" : "정태현",
-    "birth" : 911015,
-    "gender" : "남자",
-    "job" : "대학생"
-  },
-  {
-    "id" : 2,
-    "image" : "https://placeimg.com/64/64/2",
-    "name" : "나루토",
-    "birth" : 20011212,
-    "gender" : "남자",
-    "job" : "프로그래머"
-  },
-  {
-    "id" : 3,
-    "image" : "https://placeimg.com/64/64/any",
-    "name" : "루피",
-    "birth" : 981029,
-    "gender" : "남자",
-    "job" : "의사"
-  }
-]
 
 
 
@@ -57,26 +31,36 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      customer
-    })
+    this._getCustomers()
+  }
 
+  _getCustomers = () => {
+    this._callApi()
+    .then(res => this.setState({customers : res}))
+    .catch(err => console.log(err))
+  }
+
+
+  _callApi= async() => {
+     const response = await fetch('/api/customers');
+     const body = await response.json();
+     return body;
   }
 
   _renderCustomers = () => {
-    const customer = this.state.customer.map((customer) => {
+    const customers = this.state.customers.map((customers) => {
         return <Customer
-          id={customer.id}
-          key={customer.id}
-          image={customer.image}
-          name = {customer.name}
-          birth = {customer.birth}
-          gender = {customer.gender}
-          job = {customer.job}
+          id={customers.id}
+          key={customers.id}
+          image={customers.image}
+          name = {customers.name}
+          birth = {customers.birth}
+          gender = {customers.gender}
+          job = {customers.job}
       />
     })
 
-    return customer;
+    return customers;
 
 }
 
@@ -96,8 +80,9 @@ class App extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
+        
        
-          {this.state.customer ? this._renderCustomers() : "Loading"}
+          {this.state.customers ? this._renderCustomers() : "Loading"}
 
         </TableBody>
       </Table>

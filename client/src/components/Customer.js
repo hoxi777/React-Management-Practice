@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import TableBody from "@material-ui/core/TableBody";
 
 class Customer extends Component {
     render() {
