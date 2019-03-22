@@ -1,0 +1,7 @@
+{
+    "host" : "mangement-tutorial.cvfxroxfcksd.us-east-2.rds.amazonaws.com",
+    "user" : "user",
+    "password" : "rygnscj1!",
+    "port" : 3306,
+    "database" : "management"
+}
