@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Customer from "./components/Customer";
+import CustomerADD from "./components/CustomerADD";
 import Papaer from "@material-ui/core/Paper"
 import Table from "@material-ui/core/Table"
 import TableHead from "@material-ui/core/TableHead";
@@ -11,13 +12,13 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = theme => ({
-  root : {
-    width : "100%",
-    marginTop : theme.spacing.unit * 3 ,
-    overflowX : "auto" ,
+  root: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto",
   },
-  table : {
-    minWidth : 1080
+  table: {
+    minWidth: 1080
   },
   progress: {
     margin: theme.spacing.unit * 2,
@@ -31,7 +32,7 @@ const styles = theme => ({
 
 class App extends Component {
   state = {
-    customers : "",
+    customers: "",
     completed: 0
 
   }
@@ -43,70 +44,74 @@ class App extends Component {
 
   _getCustomers = () => {
     this._callApi()
-    .then(res => this.setState({customers : res}))
-    .catch(err => console.log(err))
+      .then(res => this.setState({ customers : res }))
+      .catch(err => console.log(err))
   }
 
 
-  _callApi= async() => {
-     const response = await fetch('/api/customers');
-     const body = await response.json();
-     return body;
+  _callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
   }
 
   _renderCustomers = () => {
     const customers = this.state.customers.map((customers) => {
-        return <Customer
-          id={customers.id}
-          key={customers.id}
-          image={customers.image}
-          name = {customers.name}
-          birth = {customers.birth}
-          gender = {customers.gender}
-          job = {customers.job}
+      return <Customer
+        id={customers.id}
+        key={customers.id}
+        image={customers.image}
+        name={customers.name}
+        birth={customers.birth}
+        gender={customers.gender}
+        job={customers.job}
       />
     })
 
     return customers;
 
-}
+  }
   _progress = () => {
     const { completed } = this.state;
-    this.setState({completed : completed >= 100 ? 0 : completed+1 });
- 
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <Papaer className={classes.root}>
-      <Table className={classes.table}>
-      <TableHead>
-          <TableRow>
-            <TableCell>번호</TableCell>
-            <TableCell>이미지</TableCell>
-            <TableCell>이름</TableCell>
-            <TableCell>생년월일</TableCell>
-            <TableCell>성별</TableCell>
-            <TableCell>직업</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        
-       
-          {this.state.customers ? this._renderCustomers() : 
-          <TableRow>
-            <TableCell colSpan="6" align="center">
-              <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
-            </TableCell>
-          </TableRow>
-          }
+      <div>
+        <Papaer className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>번호</TableCell>
+                <TableCell>이미지</TableCell>
+                <TableCell>이름</TableCell>
+                <TableCell>생년월일</TableCell>
+                <TableCell>성별</TableCell>
+                <TableCell>직업</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
 
-        </TableBody>
-      </Table>
-      </Papaer>
+
+              {this.state.customers ? this._renderCustomers() :
+                <TableRow>
+                  <TableCell colSpan="6" align="center">
+                    <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} />
+                  </TableCell>
+                </TableRow>
+              }
+
+            </TableBody>
+          </Table>
+        </Papaer>
+        <CustomerADD/>
+      </div>
+
     );
   }
 }
 
-export default withStyles(styles) (App);
+export default withStyles(styles)(App);
