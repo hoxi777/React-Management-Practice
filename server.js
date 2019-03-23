@@ -48,8 +48,6 @@ app.post('/api/customers',upload.single('image'), (req, res) => {
 
   connection.query(sql, params,
     (err, rows, fields) =>{
-      console.log(err);
-      console.log(rows);
       res.send(rows);
      }
     );
